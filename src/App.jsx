@@ -13,6 +13,7 @@ import { RideListing } from './components/user/RideListing'
 import axios from 'axios'
 import PrivateRoute from './PrivateRoutes'
 import PrivateRoutes from './PrivateRoutes'
+import { ResetPassword } from './components/common/ResetPassword'
 // import './App.css'
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
       <Routes>
         <Route path='/login' element={<RideLogin />} />
         <Route path='/signup' element={<RideSignup />} />
-
+        <Route path="/resetpassword/:token" element={<ResetPassword/>}/>
 
           <Route path='/' element={<HeroPage />} />
         <Route path="" element={<PrivateRoutes />}>
