@@ -23,7 +23,7 @@ export const Navbar = () => {
           <div className="nav-links">
             <ul className="nav-menu">
               <li>
-                <Link className="nav-link" to="/find-rides">Find Rides</Link>
+                <Link className="nav-link" to="/ridelisting">Find Rides</Link>
               </li>
               <li>
                 <Link className="nav-link" to="/rideposting">Offer a Ride</Link>
