@@ -1,0 +1,367 @@
+.ride-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f1f3f4;
+}
+
+.filters {
+    width: 300px;
+    padding: 20px;
+}
+
+.sort-section,
+.departure-section {
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #062d3d;
+    margin-bottom: 10px;
+}
+
+.clear-button {
+    float: right;
+    font-size: 14px;
+    font-weight: 630;
+    color: #0097db;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-option,
+.departure-option {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #062d3d;
+    margin: 8px 0;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.filter-option input,
+.departure-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.filter-option:hover,
+.departure-option:hover {
+    background-color: rgba(0, 157, 255, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 157, 255, 0.2);
+    border-radius: 5px;
+}
+
+.departure-option {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #062d3d;
+    margin: 8px 0;
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.departure-option:hover {
+    background-color: rgba(0, 157, 255, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 157, 255, 0.2);
+    border-radius: 5px;
+}
+
+/* Hide default checkbox */
+.departure-option input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Custom checkbox */
+.checkbox-custom {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #009dff;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 10px;
+    position: relative;
+}
+
+/* Checkbox tick effect */
+.checkbox-custom::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-color: #009dff;
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+.departure-option input:checked+.checkbox-custom::after {
+    display: block;
+}
+
+
+.radio-custom,
+.checkbox-custom {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #0097db;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+}
+
+.radio-custom::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: #0097db;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+input[type="radio"]:checked+.radio-custom::after {
+    display: block;
+}
+
+.checkbox-custom {
+    border-radius: 4px;
+}
+
+.checkbox-custom::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background-color: #0097db;
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+input[type="checkbox"]:checked+.checkbox-custom::after {
+    display: block;
+}
+
+.icon {
+    margin-left: auto;
+    color: gray;
+}
+
+.count {
+    margin-left: auto;
+    color: gray;
+    font-size: 14px;
+}
+
+hr {
+    border: none;
+    border-radius: 10px;
+    height: 2px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+.rides {
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.ride-card {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
+}
+
+.ride-card:hover {
+    border-color: #009dff;
+    /* transform: translateY(-2px); */
+}
+
+/* Ride Details */
+.ride-info {
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.ride-meta {
+    font-size: 14px;
+    color: #555;
+}
+
+.route {
+    font-size: 18px;
+    font-weight: bold;
+    color: #003366;
+    margin-top: 5px;
+}
+
+/* Divider Line */
+.ride-divider {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+/* Driver Section */
+.driver-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.driver-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.driver-rating {
+    display: flex;
+    font-size: 14px;
+
+}
+
+.driver-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #003366;
+}
+
+.driver-name {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.rating {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Price Styling */
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #003366;
+}
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+    .ride-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .filters {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .rides {
+        max-width: 100%;
+    }
+}
+
+/* Tablet View */
+@media screen and (max-width: 768px) {
+    .ride-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .filters {
+        width: 90%;
+        max-width: 400px;
+        padding: 15px;
+    }
+
+    .rides {
+        width: 100%;
+        max-width: 600px;
+    }
+
+    .ride-card {
+        padding: 10px;
+    }
+}
+
+/* Mobile View */
+@media screen and (max-width: 576px) {
+    .ride-container {
+        padding: 10px;
+        flex-direction: column;
+    }
+
+    .filters {
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .clear-button {
+        float: none;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .rides {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .ride-card {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .ride-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .driver-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .driver-avatar {
+        width: 35px;
+        height: 35px;
+    }
+}
