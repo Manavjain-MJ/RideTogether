@@ -1,48 +1,68 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import "../../assets/ridelogin.css"
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from './AuthContext';
 
 export const RideLogin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { setIsLoggedIn } = useContext(AuthContext);
     // const [loginData, setLoginData] = useState(null);
     const navigate = useNavigate()
 
 
+    const handleLogin = () => {
+        setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true");
+        setTimeout(() => {
+            navigate("/");
+            window.location.reload();
+        }, 500);
+    };
+
     const onSubmit = async (data) => {
         // setLoginData(data);
-        console.log("Login Data Submitted:", data);
-        const res = await axios.post("/ride/login", data)
-        console.log(res.data)
-        if (res.status == 200) {
-            // alert("Login Success")
-            toast('😁 Login Success!', {
-                position: "top-center",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: false,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce,
-            });
-            localStorage.setItem("id", res.data.data._id)
-            localStorage.setItem("role", res.data.data.roleId.roleName)
-            setTimeout(() => {
-                if (res.data.data.roleId.roleName === "rider") {
-                    navigate("/")
-                }
-                if (res.data.data.roleId.roleName === "driver") {
-                    navigate("/")
-                }
-            }, 3000);
-        } else {
-            alert("Login Failed")
+        try {
+            console.log("Login Data Submitted:", data);
+            const res = await axios.post("/ride/login", data)
+            console.log(res.data)
+            if (res.status == 200) {
+                // alert("Login Success")
+                toast('😁 Login Success!', {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                });
+                localStorage.setItem("id", res.data.data._id)
+                localStorage.setItem("role", res.data.data.roleId.roleName)
+                localStorage.setItem("isLoggedIn", "true");
 
+                setIsLoggedIn(true);
+                setTimeout(() => {
+                    if (res.data.data.roleId.roleName === "rider") {
+                        navigate("/")
+                    }
+                    if (res.data.data.roleId.roleName === "driver") {
+                        navigate("/")
+                    }
+                }, 3000);
+            } else {
+                alert("Login Failed")
+
+            }
+
+        } catch (error) {
+            toast.error("Login Failed! Please check your credentials.");
+            console.error("Login Error:", error);
         }
     };
 
@@ -74,6 +94,9 @@ export const RideLogin = () => {
 
                         <button type="submit" className="auth-button">Login</button>
                     </form>
+                    <p className="forgot-password">
+                        <Link to="/forgetpassword">Forgot Password?</Link>
+                    </p>
                     <p className="switch-auth">Don't have an account? <Link to="/signup">Sign Up</Link></p>
                 </div>
             </div>

@@ -86,6 +86,20 @@
     background-color: #0088cc;
 }
 
+.forgot-password {
+    /* margin-top: 10px; */
+}
+
+.forgot-password a {
+    color: #00aaff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}
+
 /* Switch Between Login & Signup */
 .switch-auth {
     margin-top: 15px;

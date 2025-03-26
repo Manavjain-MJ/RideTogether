@@ -1,42 +1,53 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import "../../assets/searchnavbar.css"
 import { SearchBar } from './SearchBar';
+import { AuthContext } from '../common/AuthContext';
 
 export const SearchNavbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        localStorage.removeItem("isLoggedIn");
+        localStorage.clear();
+
+        setIsLoggedIn(false);
+
+        window.location.reload();
+    };
     return (
         <>
             <nav className="navbar">
                 <div className="container">
-                    {/* Logo / Brand Name */}
                     <Link className="navbar-brand" to="/">
                         🚗 RideTogether
                     </Link>
 
-                    {/* Navbar Toggle Button for Mobile */}
                     <button className="navbar-toggler">
                         <span className="toggler-icon">&#9776;</span>
                     </button>
 
-                    {/* Navbar Links */}
                     <div className="nav-links">
                         <ul className="nav-menu">
                             <li>
-                                <Link className="nav-link" to="/find-rides">Find Rides</Link>
+                                <Link className="nav-link" to="/ridelisting">Find Rides</Link>
                             </li>
                             <li>
                                 <Link className="nav-link" to="/rideposting">Offer a Ride</Link>
                             </li>
 
-                            {/* Authentication-based Links */}
                             {isLoggedIn ? (
                                 <>
                                     <li>
-                                        <Link className="nav-link profile-link" to="/profile">👤 Profile</Link>
+                                        <Link className="nav-link profile-link" to="/profile">👤 </Link>
                                     </li>
                                     <li>
-                                        <button className="nav-button logout-btn" onClick={() => setIsLoggedIn(false)}>
+                                        <button
+                                            className="nav-button logout-btn"
+                                            onClick={handleLogout}
+                                        >
                                             Logout
                                         </button>
                                     </li>
@@ -55,7 +66,7 @@ export const SearchNavbar = () => {
                     </div>
                 </div>
             </nav>
-            <SearchBar/>
+            <SearchBar />
         </>
     )
 }

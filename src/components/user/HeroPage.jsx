@@ -88,7 +88,7 @@ export const HeroPage = () => {
             <div className='block1'>
             </div>
             <div className='block2'>
-              <h2 >Your Safety, Our Priority</h2>
+              <h2>Your Safety, Our Priority</h2>
               <p style={{ margin: "35px 0px" }}>At RideTogether, we are committed to making your ride-sharing experience safe and reliable. While we work hard to ensure security, we want you to stay informed about potential risks and how to avoid them. Follow our safety tips and ride with confidence!</p>
               <button className='learn-more'>Learn More</button>
             </div>

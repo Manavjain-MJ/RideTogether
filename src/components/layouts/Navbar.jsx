@@ -1,25 +1,34 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "../../assets/navbar.css"
 import { Link } from 'react-router-dom'
 import { HeroPage } from '../user/HeroPage'
+import { AuthContext } from '../common/AuthContext'
 
 export const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn");
+    localStorage.clear();
+
+    setIsLoggedIn(false);
+
+    window.location.reload();
+  };
   return (
     <>
-      <nav className="navbar  ">
+      <nav className="navbar">
         <div className="container">
-          {/* Logo / Brand Name */}
           <Link className="navbar-brand" to="/">
             🚗 RideTogether
           </Link>
 
-          {/* Navbar Toggle Button for Mobile */}
           <button className="navbar-toggler">
             <span className="toggler-icon">&#9776;</span>
           </button>
 
-          {/* Navbar Links */}
           <div className="nav-links">
             <ul className="nav-menu">
               <li>
@@ -29,14 +38,16 @@ export const Navbar = () => {
                 <Link className="nav-link" to="/rideposting">Offer a Ride</Link>
               </li>
 
-              {/* Authentication-based Links */}
               {isLoggedIn ? (
                 <>
                   <li>
-                    <Link className="nav-link profile-link" to="/profile">👤 Profile</Link>
+                    <Link className="nav-link profile-link" to="/profile">👤 </Link>
                   </li>
                   <li>
-                    <button className="nav-button logout-btn" onClick={() => setIsLoggedIn(false)}>
+                    <button
+                      className="nav-button logout-btn"
+                      onClick={handleLogout}
+                    >
                       Logout
                     </button>
                   </li>
