@@ -16,6 +16,7 @@ import PrivateRoutes from './PrivateRoutes'
 import { ResetPassword } from './components/common/ResetPassword'
 import { ForgetPassword } from './components/common/ForgetPassword'
 import { AuthProvider } from './components/common/AuthContext'
+import { RideDetails } from './components/user/RideDetails'
 // import './App.css'
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
             <Route path='/vehicledetails' element={<VehicleDetails />} />
             <Route path='/ridelisting' element={<RideListing />} />
           </Route>
+            <Route path='/ridedetails/:id' element={<RideDetails/>}/>
         </Routes>
       </AuthProvider>
       {/* <Navbar/> */}
