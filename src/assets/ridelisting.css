@@ -60,70 +60,18 @@ h3 {
     border-radius: 5px;
 }
 
-.departure-option {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: #062d3d;
-    margin: 8px 0;
-    cursor: pointer;
-    position: relative;
-    padding: 5px;
-    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-}
-
-.departure-option:hover {
-    background-color: rgba(0, 157, 255, 0.1);
-    box-shadow: 0 2px 10px rgba(0, 157, 255, 0.2);
-    border-radius: 5px;
-}
-
-/* Hide default checkbox */
-.departure-option input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-}
-
-/* Custom checkbox */
-.checkbox-custom {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #009dff;
-    border-radius: 4px;
-    display: inline-block;
-    margin-right: 10px;
-    position: relative;
-}
-
-/* Checkbox tick effect */
-.checkbox-custom::after {
-    content: "";
-    width: 12px;
-    height: 12px;
-    background-color: #009dff;
-    border-radius: 3px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: none;
-}
-
-.departure-option input:checked+.checkbox-custom::after {
-    display: block;
-}
-
-
-.radio-custom,
-.checkbox-custom {
-    display: inline-block;
+.checkbox-custom,
+.radio-custom {
     width: 18px;
     height: 18px;
     border: 2px solid #0097db;
-    border-radius: 50%;
+    display: inline-block;
     margin-right: 10px;
     position: relative;
+}
+
+.radio-custom {
+    border-radius: 50%;
 }
 
 .radio-custom::after {
@@ -164,11 +112,7 @@ input[type="checkbox"]:checked+.checkbox-custom::after {
     display: block;
 }
 
-.icon {
-    margin-left: auto;
-    color: gray;
-}
-
+.icon,
 .count {
     margin-left: auto;
     color: gray;
@@ -199,16 +143,13 @@ hr {
     transition: 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease-in-out;
     border: 2px solid transparent;
 }
 
 .ride-card:hover {
     border-color: #009dff;
-    /* transform: translateY(-2px); */
 }
 
-/* Ride Details */
 .ride-info {
     padding-bottom: 10px;
     display: flex;
@@ -227,14 +168,6 @@ hr {
     margin-top: 5px;
 }
 
-/* Divider Line */
-.ride-divider {
-    border: none;
-    border-top: 1px solid #ddd;
-    margin: 10px 0;
-}
-
-/* Driver Section */
 .driver-section {
     display: flex;
     justify-content: space-between;
@@ -245,13 +178,6 @@ hr {
     display: flex;
     align-items: center;
     gap: 10px;
-
-}
-
-.driver-rating {
-    display: flex;
-    font-size: 14px;
-
 }
 
 .driver-avatar {
@@ -266,18 +192,12 @@ hr {
     font-weight: 500;
 }
 
-.rating {
-    font-size: 14px;
-    color: #666;
-}
-
-/* Price Styling */
 .price {
     font-size: 18px;
     font-weight: bold;
     color: #003366;
 }
-/* Responsive Design */
+
 @media screen and (max-width: 1024px) {
     .ride-container {
         flex-direction: column;
@@ -295,7 +215,6 @@ hr {
     }
 }
 
-/* Tablet View */
 @media screen and (max-width: 768px) {
     .ride-container {
         flex-direction: column;
@@ -318,11 +237,9 @@ hr {
     }
 }
 
-/* Mobile View */
 @media screen and (max-width: 576px) {
     .ride-container {
         padding: 10px;
-        flex-direction: column;
     }
 
     .filters {
@@ -341,18 +258,11 @@ hr {
 
     .rides {
         width: 100%;
-        max-width: 100%;
     }
 
     .ride-card {
         padding: 10px;
         font-size: 14px;
-    }
-
-    .ride-info {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
     }
 
     .driver-info {
@@ -363,5 +273,26 @@ hr {
     .driver-avatar {
         width: 35px;
         height: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .filters {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 250px;
+        height: 100%;
+        background: white;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .filters.open {
+        display: block;
+        transform: translateX(0);
     }
 }

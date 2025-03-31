@@ -66,7 +66,7 @@ export const SearchNavbar = () => {
                     </div>
                 </div>
             </nav>
-            <SearchBar />
+
         </>
     )
 }

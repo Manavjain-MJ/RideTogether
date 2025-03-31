@@ -8,6 +8,7 @@ export const SearchBar = () => {
     const [passengers, setPassengers] = useState(1);
     return (
         <>
+        
             <div className="search-bar-container">
                 <div className="search-bar">
                     <div className="input-group">

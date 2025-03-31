@@ -31,13 +31,19 @@ export const RidePosting = () => {
 
     const onSubmit = async (data) => {
         try {
-            const res = await axios.post("/liveride/addliveride", data)
+            const driverId = localStorage.getItem("id");
+            if (!driverId) {
+                alert("User is not logged in!");
+                return; 
+            }
+
+            const rideData = { ...data, driverId }
+            const res = await axios.post("/liveride/addliveride", rideData)
             if (res.status === 201) {
                 alert("ride posted")
                 console.log("Ride Data:", res.data);
-
             } else {
-                alert("ride didnot posted")
+                alert("ride was not posted")
 
             }
         } catch (error) {
@@ -87,7 +93,7 @@ export const RidePosting = () => {
                     />
                     {errors.seats && <p className="error">{errors.seats.message}</p>}
 
-                    <label>Ride Price Per Seat ($):</label>
+                    <label>Ride Price Per Seat (₹):</label>
                     <input
                         type="number"
                         {...register("pricePerSeat", { required: "Price is required", min: { value: 1, message: "Price must be at least $1" } })}

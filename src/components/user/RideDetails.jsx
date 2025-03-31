@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import "../../assets/ridedetails.css"
+import axios from 'axios';
 
 export const RideDetails = () => {
     const { id } = useParams();
@@ -24,6 +25,21 @@ export const RideDetails = () => {
         },
         price: 570,
     };
+    console.log("Ride ID:", id);
+    const [RideDetails, setRideDetails] = useState({})
+
+    const riderDetails = async () => {
+        try {
+            const res = await axios.get("/liveride/getliverides")
+            console.log(res)
+        } catch (error) {
+            console.log("error", error)
+
+        }
+    }
+    useEffect(() => {
+        riderDetails()
+    }, [])
     return (
         <>
             <div className="ride-details-container">
