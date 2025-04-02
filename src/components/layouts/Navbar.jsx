@@ -35,7 +35,7 @@ export const Navbar = () => {
                 <Link className="nav-link" to="/ridelisting">Find Rides</Link>
               </li>
               <li>
-                <Link className="nav-link" to="/rideposting">Offer a Ride</Link>
+                <Link className="nav-link" to="/vehicledetails">Offer a Ride</Link>
               </li>
 
               {isLoggedIn ? (

@@ -4,6 +4,7 @@ import "../../assets/vehicledetails.css"
 import { Navbar } from '../layouts/Navbar';
 import { Footer } from '../layouts/Footer';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const VehicleDetails = () => {
     const {
@@ -13,6 +14,8 @@ export const VehicleDetails = () => {
         formState: { errors },
     } = useForm();
     const [imagePreview, setImagePreview] = useState([]);
+    const navigate = useNavigate();
+
 
 
 
@@ -38,7 +41,12 @@ export const VehicleDetails = () => {
         }
         try {
             const res = await axios.post("/vehicle/addfile", formData)
-            if (res.status === 201) {
+            console.log("Full API Response:", res);
+            if (res.status === 201 && res.data.data._id) {
+                console.log("response:", res.data)
+                const vehicleId = res.data.data._id;
+                console.log("Vehicle ID:", vehicleId);
+                localStorage.setItem("vehicleId", vehicleId);
                 alert("Your Vehicle Details Are Added Successfully")
 
             } else {
@@ -48,6 +56,7 @@ export const VehicleDetails = () => {
             console.log("error", error)
         }
         setImagePreview([]);
+        navigate("/rideposting")
     };
 
 

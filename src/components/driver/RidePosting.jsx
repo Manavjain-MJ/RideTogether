@@ -23,25 +23,28 @@ export const RidePosting = () => {
         const updateMinDateTime = () => {
             setMinDateTime(new Date().toISOString().slice(0, 16));
         };
-        updateMinDateTime(); // Set initial value
-        const interval = setInterval(updateMinDateTime, 60000); // Update every 1 minute
+        updateMinDateTime(); 
+        const interval = setInterval(updateMinDateTime, 60000); 
         return () => clearInterval(interval);
     }, []);
 
 
     const onSubmit = async (data) => {
         try {
+            const vehicleId = localStorage.getItem("vehicleId");
             const driverId = localStorage.getItem("id");
-            if (!driverId) {
-                alert("User is not logged in!");
+            if (!vehicleId||!driverId) {
+                alert("Vehicle or User is not properly linked!");
                 return; 
             }
 
-            const rideData = { ...data, driverId }
+            const rideData = { ...data,vehicleId,driverId }
             const res = await axios.post("/liveride/addliveride", rideData)
             if (res.status === 201) {
                 alert("ride posted")
+                localStorage.removeItem("vehicleId");
                 console.log("Ride Data:", res.data);
+                navigate("/ridelisting");
             } else {
                 alert("ride was not posted")
 
@@ -49,7 +52,7 @@ export const RidePosting = () => {
         } catch (error) {
             console.log("error", error)
         }
-        navigate("/vehicledetails");
+        // navigate("/vehicledetails");
     };
     return (
         <>
