@@ -4,6 +4,7 @@ import "../../assets/ridesignup.css"
 import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { Navbar } from '../layouts/Navbar';
 
 export const RideSignup = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -59,6 +60,7 @@ export const RideSignup = () => {
                 theme="dark"
                 transition={Bounce}
             />
+            <Navbar/>
             <div className="signup-container">
                 <div className="signup-box">
                     <h2>Sign Up</h2>

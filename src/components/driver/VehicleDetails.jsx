@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import "../../assets/vehicledetails.css"
 import { Navbar } from '../layouts/Navbar';
@@ -15,11 +15,9 @@ export const VehicleDetails = () => {
     } = useForm();
     const [imagePreview, setImagePreview] = useState([]);
     const navigate = useNavigate();
-
-
-
-
-
+    const [vehicleId, setVehicleId] = useState(null)
+    const isNavigating = useRef(false);
+    const [rideSubmitted, setRideSubmitted] = useState(false);
 
     const onSubmit = async (data) => {
         console.log("Vehicle Data:", data);
@@ -45,10 +43,14 @@ export const VehicleDetails = () => {
             if (res.status === 201 && res.data.data._id) {
                 console.log("response:", res.data)
                 const vehicleId = res.data.data._id;
-                console.log("Vehicle ID:", vehicleId);
+                setVehicleId(vehicleId);
                 localStorage.setItem("vehicleId", vehicleId);
+                console.log("Vehicle ID:", vehicleId);
                 alert("Your Vehicle Details Are Added Successfully")
 
+                setRideSubmitted(true);
+                isNavigating.current = true;
+                navigate("/rideposting")
             } else {
                 alert("Your Vehicle Details Are Not Added")
             }
@@ -56,9 +58,50 @@ export const VehicleDetails = () => {
             console.log("error", error)
         }
         setImagePreview([]);
-        navigate("/rideposting")
     };
 
+    const deleteVehicleData = async () => {
+        const storedVehicleId = localStorage.getItem("vehicleId");
+        if (storedVehicleId) {
+            alert("Deleting vehicle data because ride was not submitted...");
+            try {
+                await axios.delete(`/vehicle/deletevehicle/${storedVehicleId}`);
+                alert("Vehicle details removed successfully.");
+            } catch (error) {
+                console.error("Error deleting vehicle:", error);
+                alert("Error removing vehicle data.");
+            } finally {
+                localStorage.removeItem("vehicleId");
+                setVehicleId(null);
+            }
+        }
+    };
+
+    useEffect(() => {
+        const handleUnloadOrNavigate = () => {
+            const storedVehicleId = localStorage.getItem("vehicleId");
+            if (!rideSubmitted && storedVehicleId) {
+                alert("You left before completing the ride. Deleting vehicle...");
+                axios.delete(`/vehicle/deletevehicle/${storedVehicleId}`)
+                    .then(() => {
+                        alert("Vehicle deleted successfully.");
+                        localStorage.removeItem("vehicleId");
+                    })
+                    .catch((err) => {
+                        console.error("Delete error:", err);
+                        alert("Error deleting vehicle.");
+                    });
+            }
+        };
+
+        window.addEventListener("beforeunload", handleUnloadOrNavigate);
+        return () => {
+            if (!isNavigating.current) {
+                handleUnloadOrNavigate();
+            }
+            window.removeEventListener("beforeunload", handleUnloadOrNavigate);
+        };
+    }, [rideSubmitted]);
 
 
 
@@ -85,13 +128,20 @@ export const VehicleDetails = () => {
                 <h2>Vehicle Details</h2>
                 <form onSubmit={handleSubmit(onSubmit)} className="vehicle-form">
                     {/* Vehicle Information */}
-                    <label>Car Make & Model:</label>
+                    <label>Vehicle Brand:</label>
                     <input
                         type="text"
-                        {...register("carModel", { required: "Car model is required" })}
-                        placeholder="e.g., Toyota Corolla"
+                        {...register("vehicleBrand", { required: "Vehicle Brand is required" })}
+                        placeholder="e.g., Toyota,Tata"
                     />
-                    {errors.carModel && <p className="error">{errors.carModel.message}</p>}
+                    {errors.carModel && <p className="error">{errors.vehicleBrand.message}</p>}
+                    <label>Vehicle Model:</label>
+                    <input
+                        type="text"
+                        {...register("vehicleModel", { required: "Vehicle model is required" })}
+                        placeholder="e.g., Corolla,safari"
+                    />
+                    {errors.carModel && <p className="error">{errors.vehicleModel.message}</p>}
 
                     <label>Year of Manufacture:</label>
                     <input

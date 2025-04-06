@@ -6,6 +6,7 @@ import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
+import { Navbar } from "../layouts/Navbar"
 
 export const RideLogin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -81,6 +82,7 @@ export const RideLogin = () => {
                 theme="dark"
                 transition={Bounce}
             />
+            <Navbar />
             <div className="auth-background">
                 <div className="auth-container login">
                     <h2>Log In</h2>

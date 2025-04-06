@@ -21,9 +21,9 @@ export const Navbar = () => {
     <>
       <nav className="navbar">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <a href='/' className="navbar-brand">
             🚗 RideTogether
-          </Link>
+          </a>
 
           <button className="navbar-toggler">
             <span className="toggler-icon">&#9776;</span>

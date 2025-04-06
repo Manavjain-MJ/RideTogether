@@ -17,6 +17,8 @@ import { ResetPassword } from './components/common/ResetPassword'
 import { ForgetPassword } from './components/common/ForgetPassword'
 import { AuthProvider } from './components/common/AuthContext'
 import { RideDetails } from './components/user/RideDetails'
+import { ConfirmationPage } from './components/common/ConfirmationPage'
+import { UserProfile } from './components/user/UserProfile'
 // import './App.css'
 
 function App() {
@@ -35,8 +37,10 @@ function App() {
             <Route path='/rideposting' element={<RidePosting />} />
             <Route path='/vehicledetails' element={<VehicleDetails />} />
             <Route path='/ridelisting' element={<RideListing />} />
-          </Route>
             <Route path='/ridedetails/:id' element={<RideDetails/>}/>
+            <Route path='/confirmationpage' element={<ConfirmationPage/>}/>
+            <Route path='/userprofile' element={<UserProfile/>}/>
+          </Route>
         </Routes>
       </AuthProvider>
       {/* <Navbar/> */}

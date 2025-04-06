@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import "../../assets/ridedetails.css"
 import axios from 'axios';
 import { Navbar } from '../layouts/Navbar';
@@ -31,7 +31,7 @@ export const RideDetails = () => {
     if (!ride) return <p>No ride data available.</p>;
     return (
         <>
-        <Navbar/>
+            <Navbar />
             <div className="ride-details-container">
                 {/* Date Header */}
                 <h2 className="ride-date">{currentDate}</h2>
@@ -41,7 +41,7 @@ export const RideDetails = () => {
                     <div className="ride-time">
                         <p className="time">
                             Start: {ride.departureTime ? new Date(ride.departureTime).toLocaleTimeString() : "N/A"}
-                        </p>    
+                        </p>
                         <p className="duration">End:{ride.arrivalTime}</p>
                     </div>
                     <div className="ride-route">
@@ -56,7 +56,7 @@ export const RideDetails = () => {
                     <div className="driver-details">
                         <h3>{ride.driverId?.userName}</h3>
                         <p>Your booking will be confirmed instantly</p>
-                        <p>🚗 {ride.driverId?.vehicle}</p>
+                        <p>🚗 {ride.vehicleId?.vehicleBrand}-{ride.vehicleId?.vehicleModel}</p>
                         <p>📧 {ride.driverId?.email || "N/A"}</p>
                         <p>📞 {ride.driverId?.mobileNumber || "N/A"}</p>
                     </div>
@@ -73,10 +73,10 @@ export const RideDetails = () => {
                         <p>{ride.seatsAvailable} Seats Available</p>
                         <h2>₹{ride.pricePerSeat}.00</h2>
                     </div>
-                    <button className="book-button">⚡ Book</button>
+                    <Link to="/confirmationpage"><button className="book-button">⚡ Book</button></Link>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }

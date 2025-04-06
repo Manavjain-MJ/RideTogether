@@ -122,8 +122,8 @@ export const HeroPage = () => {
         </section>
         <section>
           <div>
-            <h1 className="title">Ride-Together Help Centre</h1>
             <div className="help-centre">
+            <h1 className="title">Ride-Together Help Centre</h1>
               <div className="faq-container">
                 {faqs.map((faq, index) => (
                   <div key={index} className="faq-item">
