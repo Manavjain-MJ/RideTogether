@@ -43,7 +43,7 @@ export const RidePosting = () => {
             if (res.status === 201) {
                 alert("ride posted")
                 localStorage.removeItem("vehicleId");
-                console.log("Ride Data:", res.data);
+                // console.log("Ride Data:", res.data);
                 navigate("/ridelisting");
             } else {
                 alert("ride was not posted")

@@ -33,7 +33,7 @@ export const RideListing = () => {
     try {
       const res = await axios.get(`/liveride/getliverides`);
       setRideLists(res.data.data);
-      console.log("API Response:", res.data);
+      // console.log("API Response:", res.data);
     } catch (err) {
       setError("Failed to fetch rides. Please try again.");
     }

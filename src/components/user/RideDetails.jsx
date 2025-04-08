@@ -17,7 +17,7 @@ export const RideDetails = () => {
         try {
             const res = await axios.get(`/liveride/getridebyid/${id}`)
             setRide(res.data.data)
-            console.log(res)
+            // console.log(res)
         } catch (error) {
             console.log("error", error)
 

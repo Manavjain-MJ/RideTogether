@@ -41,7 +41,7 @@ export const Navbar = () => {
               {isLoggedIn ? (
                 <>
                   <li>
-                    <Link className="nav-link profile-link" to="/profile">👤 </Link>
+                    <Link className="nav-link profile-link" to="/userprofile">👤 </Link>
                   </li>
                   <li>
                     <button

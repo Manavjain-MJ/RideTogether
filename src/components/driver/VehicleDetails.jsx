@@ -20,7 +20,7 @@ export const VehicleDetails = () => {
     const [rideSubmitted, setRideSubmitted] = useState(false);
 
     const onSubmit = async (data) => {
-        console.log("Vehicle Data:", data);
+        // console.log("Vehicle Data:", data);
         const formData = new FormData();
         formData.append("vehicleBrand", data.vehicleBrand);
         formData.append("vehicleModel", data.vehicleModel);
@@ -39,13 +39,13 @@ export const VehicleDetails = () => {
         }
         try {
             const res = await axios.post("/vehicle/addfile", formData)
-            console.log("Full API Response:", res);
+            // console.log("Full API Response:", res);
             if (res.status === 201 && res.data.data._id) {
-                console.log("response:", res.data)
+                // console.log("response:", res.data)
                 const vehicleId = res.data.data._id;
                 setVehicleId(vehicleId);
                 localStorage.setItem("vehicleId", vehicleId);
-                console.log("Vehicle ID:", vehicleId);
+                // console.log("Vehicle ID:", vehicleId);
                 alert("Your Vehicle Details Are Added Successfully")
 
                 setRideSubmitted(true);

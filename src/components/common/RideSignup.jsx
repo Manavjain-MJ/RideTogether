@@ -5,11 +5,15 @@ import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Navbar } from '../layouts/Navbar';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const RideSignup = () => {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [submitted, setSubmitted] = useState(false);
     const navigate = useNavigate()
+    const [passwordValue, setPasswordValue] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
     const userType = watch("userType", "rider");
 
@@ -18,10 +22,10 @@ export const RideSignup = () => {
         const driverRoleId = "67c86430a357949d7d5d7402";
         const roleId = data.userType === "driver" ? driverRoleId : riderRoleId;
         const updatedData = { ...data, roleId };
-        console.log(data);
+        // console.log(data);
         setSubmitted(true);
         const res = await axios.post("/ride/signup", updatedData)
-        console.log(res.data)
+        // console.log(res.data)
         if (res.status === 201) {
             // alert("signup success")
             toast('😁 Signin Success!', {
@@ -60,7 +64,7 @@ export const RideSignup = () => {
                 theme="dark"
                 transition={Bounce}
             />
-            <Navbar/>
+            <Navbar />
             <div className="signup-container">
                 <div className="signup-box">
                     <h2>Sign Up</h2>
@@ -72,9 +76,25 @@ export const RideSignup = () => {
                         <input type="email" placeholder="Email" {...register("email", { required: true, pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ })} />
                         {errors.email && <span className="error">Valid Email is required</span>}
 
-                        <input type="password" placeholder="Password" {...register("password", { required: true, minLength: 6 })} />
-                        {errors.password && <span className="error">Password must be at least 6 characters</span>}
-
+                        <div className="password-input-wrapper">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                {...register("password", {
+                                    required: true,
+                                    minLength: 6,
+                                    onChange: (e) => setPasswordValue(e.target.value),
+                                })}
+                            />
+                            {passwordValue && (
+                                <span className="eye-icon" onClick={togglePasswordVisibility}>
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
+                            )}
+                        </div>
+                        {errors.password && (
+                            <span className="error">Password must be at least 6 characters</span>
+                        )}
                         <input type="text" placeholder="Phone Number" {...register("mobileNumber", { required: true, pattern: /[6-9]{1}[0-9]{9}/ })} />
                         {errors.phone && <span className="error">Enter a valid 10-digit phone number</span>}
 

@@ -86,9 +86,9 @@
     background-color: #0088cc;
 }
 
-.forgot-password {
-    /* margin-top: 10px; */
-}
+/* .forgot-password {
+    margin-top: 10px;
+} */
 
 .forgot-password a {
     color: #00aaff;
@@ -123,4 +123,31 @@
     text-align: left;
     margin-top: -5px;
     margin-bottom: 10px;
+}
+
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+    /* Make space for the icon */
+    box-sizing: border-box;
+}
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 18px;
+    transition: color 0.2s ease;
+}
+
+.eye-icon:hover {
+    color: #333;
 }

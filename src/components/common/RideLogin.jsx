@@ -7,12 +7,16 @@ import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from './AuthContext';
 import { Navbar } from "../layouts/Navbar"
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const RideLogin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { setIsLoggedIn } = useContext(AuthContext);
     // const [loginData, setLoginData] = useState(null);
     const navigate = useNavigate()
+    const [showPassword, setShowPassword] = useState(false);
+    const [passwordValue, setPasswordValue] = useState("");
+    const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
 
     const handleLogin = () => {
@@ -27,9 +31,9 @@ export const RideLogin = () => {
     const onSubmit = async (data) => {
         // setLoginData(data);
         try {
-            console.log("Login Data Submitted:", data);
+            // console.log("Login Data Submitted:", data);
             const res = await axios.post("/ride/login", data)
-            console.log(res.data)
+            // console.log(res.data)
             if (res.status == 200) {
                 // alert("Login Success")
                 toast('😁 Login Success!', {
@@ -91,8 +95,21 @@ export const RideLogin = () => {
                         <input type="email" placeholder="Email" {...register("email", { required: true, pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ })} />
                         {errors.email && <span className="error">Email is required</span>}
 
-                        <input type="password" placeholder="Password" {...register("password", { required: true, minLength: 6 })} />
-                        {errors.password && <span className="error">Password is required</span>}
+                        <div className="password-input-wrapper">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                value={passwordValue}
+                                // onChange={(e) => setPasswordValue(e.target.value)}
+                                {...register("password", { required: true, minLength: 6, onChange: (e) => setPasswordValue(e.target.value) })}
+                            />
+                            {passwordValue && (
+                                <span className="eye-icon" onClick={togglePasswordVisibility}>
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
+                            )}
+                        </div>
+                        {errors.password && <span className="error">Password must be at least 6 characters</span>}
 
                         <button type="submit" className="auth-button">Login</button>
                     </form>
