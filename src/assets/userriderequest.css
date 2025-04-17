@@ -1,0 +1,106 @@
+.userRideRequests-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.userRide-Card {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.userRide-info {
+    width: 35%;
+}
+
+.userRide-driver-info h3,
+.userRide-ride-details p {
+    margin: 5px 0;
+}
+
+.userRide-status h4 {
+    margin: 10px 0;
+}
+
+.status-pending {
+    color: orange;
+}
+
+.status-accepted {
+    color: green;
+}
+
+.status-cancelled {
+    color: red;
+}
+
+.status-not-started {
+    color: grey;
+}
+
+.userRide-status-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.userRide-status-buttons button {
+    padding: 8px 16px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.userRide-status-buttons button:hover {
+    background-color: #218838;
+}
+
+.userRide-chat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.userRide-messages {
+    background: #f1f1f1;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.userRide-message-input {
+    display: flex;
+    gap: 10px;
+}
+
+.userRide-message-input input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.userRide-message-input button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.userRide-message-input button:hover {
+    background-color: #0056b3;
+}
+
+.error {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}

@@ -47,9 +47,9 @@ export const HeroPage = () => {
   };
   return (
     <>
-    <div>
-      <Navbar/>
-    </div>
+      <div>
+        <Navbar />
+      </div>
       <div className="home-container">
         {/* Hero Section */}
         <section className="hero-section">
@@ -99,12 +99,12 @@ export const HeroPage = () => {
             <div className='driving-block2'>
               <h2>Hitting the road soon?</h2>
               <p style={{ margin: "35px 0px" }}>Make your trip smarter share your ride and save more on the journey!</p>
-              <button className='offer'>Offer A Ride</button>
+              <Link to="/vehicledetails"><button className='offer'>Offer A Ride</button></Link>
             </div>
             <div className='driving-block1'>
             </div>
           </div>
-        </section>
+        </section >
         <section>
           <div className='freq-places'>
             <div className="freq-container">
@@ -123,7 +123,7 @@ export const HeroPage = () => {
         <section>
           <div>
             <div className="help-centre">
-            <h1 className="title">Ride-Together Help Centre</h1>
+              <h1 className="title">Ride-Together Help Centre</h1>
               <div className="faq-container">
                 {faqs.map((faq, index) => (
                   <div key={index} className="faq-item">
@@ -147,7 +147,7 @@ export const HeroPage = () => {
         <section>
           <Footer />
         </section>
-      </div>
+      </div >
     </>
   )
 }

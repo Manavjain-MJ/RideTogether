@@ -160,6 +160,7 @@
   border-radius: 30px;
   cursor: pointer;
   transition: background 0.3s ease;
+  text-decoration: none;
 }
 
 .offer:hover {

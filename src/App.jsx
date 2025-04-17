@@ -19,31 +19,54 @@ import { AuthProvider } from './components/common/AuthContext'
 import { RideDetails } from './components/user/RideDetails'
 import { ConfirmationPage } from './components/common/ConfirmationPage'
 import { UserProfile } from './components/user/UserProfile'
+import { UserGovtProfile } from './components/user/UserGovtProfile'
+import { UserEditProfile } from './components/user/UserEditProfile'
+import { ChatBoxPage } from './components/common/ChatBoxPage'
+import { io } from 'socket.io-client'
+import { DriverRides } from './components/driver/DriverRides'
+import { RideRequestPage } from './components/user/RideRequestPage'
+import { UserRideRequest } from './components/user/UserRideRequest'
+import { LoadScript } from "@react-google-maps/api";
+import { RazorPayDemo } from './components/user/RazorPayDemo'
+import { ToastContainer } from 'react-toastify'
 // import './App.css'
 
 function App() {
   axios.defaults.baseURL = "http://localhost:8000"
+
   return (
     <>
-      <AuthProvider>
-        <Routes>
-          <Route path='/login' element={<RideLogin />} />
-          <Route path='/signup' element={<RideSignup />} />
-          <Route path='/forgetpassword' element={<ForgetPassword />} />
-          <Route path="/resetpassword/:token" element={<ResetPassword />} />
+    <ToastContainer position="top-right" autoClose={2500}/>
+      <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={["places"]}>
+        <AuthProvider>
+          <Routes>
+            <Route path='/login' element={<RideLogin />} />
+            <Route path='/signup' element={<RideSignup />} />
+            <Route path='/forgetpassword' element={<ForgetPassword />} />
+            <Route path="/resetpassword/:token" element={<ResetPassword />} />
 
-          <Route path='/' element={<HeroPage />} />
-          <Route path="" element={<PrivateRoutes />}>
-            <Route path='/rideposting' element={<RidePosting />} />
-            <Route path='/vehicledetails' element={<VehicleDetails />} />
-            <Route path='/ridelisting' element={<RideListing />} />
-            <Route path='/ridedetails/:id' element={<RideDetails/>}/>
-            <Route path='/confirmationpage' element={<ConfirmationPage/>}/>
-            <Route path='/userprofile' element={<UserProfile/>}/>
-          </Route>
-        </Routes>
-      </AuthProvider>
-      {/* <Navbar/> */}
+            <Route path='/' element={<HeroPage />} />
+            <Route path="" element={<PrivateRoutes />}>
+              <Route path='/rideposting' element={<RidePosting />} />
+              <Route path='/vehicledetails' element={<VehicleDetails />} />
+              <Route path='/ridelisting' element={<RideListing />} />
+              <Route path='/ridedetails/:id' element={<RideDetails />} />
+              <Route path='/riderequest/:id' element={<RideRequestPage />} />
+              {/* <Route path="/chatbox/:rideId" element={<ChatBoxPage />} /> */}
+              <Route path='/confirmationpage' element={<ConfirmationPage />} />
+              <Route path='/userprofile' element={<UserProfile />} />
+              <Route path='/usergovtid' element={<UserGovtProfile />} />
+              <Route path='/usereditprofile' element={<UserEditProfile />}></Route>
+            </Route>
+            <Route path='/chatbox/:id' element={<ChatBoxPage />}></Route>
+            <Route path='/driverrides' element={<DriverRides />}></Route>
+            <Route path='/riderrequestrides' element={<UserRideRequest />} />
+            <Route path="/paymentgateway" element={<RazorPayDemo/>}/>
+
+          </Routes>
+        </AuthProvider>
+        {/* <Navbar/> */}
+      </LoadScript>
     </>
   )
 }

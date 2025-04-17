@@ -11,22 +11,23 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const RideLogin = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { setIsLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn, setUser } = useContext(AuthContext);
     // const [loginData, setLoginData] = useState(null);
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false);
     const [passwordValue, setPasswordValue] = useState("");
+    // const [user, setUser] = useState(null);
     const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
 
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-        localStorage.setItem("isLoggedIn", "true");
-        setTimeout(() => {
-            navigate("/");
-            window.location.reload();
-        }, 500);
-    };
+    // const handleLogin = () => {
+    //     setIsLoggedIn(true);
+    //     localStorage.setItem("isLoggedIn", "true");
+    //     setTimeout(() => {
+    //         navigate("/");
+    //         // window.location.reload();
+    //     }, 500);
+    // };
 
     const onSubmit = async (data) => {
         // setLoginData(data);
@@ -47,19 +48,28 @@ export const RideLogin = () => {
                     theme: "dark",
                     transition: Bounce,
                 });
-                localStorage.setItem("id", res.data.data._id)
-                localStorage.setItem("role", res.data.data.roleId.roleName)
+                const user = {
+                    id: res.data.data._id,
+                    role: res.data.data.roleId.roleName,
+                };
+                localStorage.setItem("user", JSON.stringify(user));
                 localStorage.setItem("isLoggedIn", "true");
+                // localStorage.setItem("id", res.data.data._id)
+                // localStorage.setItem("role", res.data.data.roleId.roleName)
 
                 setIsLoggedIn(true);
+                setUser(user);
                 setTimeout(() => {
-                    if (res.data.data.roleId.roleName === "rider") {
-                        navigate("/")
+                    const storedUser = JSON.parse(localStorage.getItem('user'));
+                    if (storedUser) {
+                        if (storedUser.role === "rider") {
+                            navigate("/ridelisting")
+                        }
+                        else if (storedUser.role === "driver") {
+                            navigate("/vehicledetails")
+                        }
                     }
-                    if (res.data.data.roleId.roleName === "driver") {
-                        navigate("/")
-                    }
-                }, 3000);
+                }, 2000);
             } else {
                 alert("Login Failed")
 

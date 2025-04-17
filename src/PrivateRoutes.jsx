@@ -6,14 +6,12 @@ const useAuth = () => {
     const [loading, setloading] = useState(true)
 
     useEffect(() => {
-        const id = localStorage.getItem("id")
-        const role = localStorage.getItem("role")
-        if (id) {
-            setauthState({ isLoggedin: true, role })
+        const user = JSON.parse(localStorage.getItem("user"));
+        if (user?.id && user?.role) {
+            setauthState({ isLoggedin: true, role: user.role });
         }
-        setloading(false)
-
-    }, [])
+        setloading(false);
+    }, []); 
     return {
         ...authState, loading
     }

@@ -33,7 +33,7 @@ export const RideListing = () => {
     try {
       const res = await axios.get(`/liveride/getliverides`);
       setRideLists(res.data.data);
-      // console.log("API Response:", res.data);
+      console.log("API Response:", res.data);
     } catch (err) {
       setError("Failed to fetch rides. Please try again.");
     }
@@ -162,7 +162,7 @@ export const RideListing = () => {
                     <span className="time">
                       {ride.departureTime} - {ride.duration} - {ride.arrivalTime}
                     </span>
-                    <h4>{ride.departureTime} → {ride.arrivalTime}</h4>
+                    <h4>{ride.startLocation} → {ride.destination}</h4>
                     <div className="price">₹{ride.pricePerSeat}.00</div>
                   </div>
                   {/* Divider Line */}

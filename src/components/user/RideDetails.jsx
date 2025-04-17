@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import "../../assets/ridedetails.css"
 import axios from 'axios';
 import { Navbar } from '../layouts/Navbar';
 import { Footer } from '../layouts/Footer';
+import { ChatBoxPage } from '../common/ChatBoxPage';
 
-export const RideDetails = () => {
+export const RideDetails = ({ rideId, userId }) => {
     const { id } = useParams();
     const [ride, setRide] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [user, setUser] = useState(null);
+    const [showChat, setShowChat] = useState(false);
+    const navigate = useNavigate();
     const currentDate = new Date().toDateString();
 
     const riderDetails = async () => {
@@ -25,7 +28,14 @@ export const RideDetails = () => {
     }
     useEffect(() => {
         riderDetails()
+        const currentUser = JSON.parse(localStorage.getItem("user"));  // Get user from localStorage
+        setUser(currentUser);
     }, [])
+
+    const handleBookClick = () => {
+        navigate(`/riderequest/${id}`); // assuming ride._id is the ID of the current ride
+    };
+
     // if (loading) return <p>Loading ride details...</p>;
     if (error) return <p>{error}</p>;
     if (!ride) return <p>No ride data available.</p>;
@@ -42,7 +52,7 @@ export const RideDetails = () => {
                         <p className="time">
                             Start: {ride.departureTime ? new Date(ride.departureTime).toLocaleTimeString() : "N/A"}
                         </p>
-                        <p className="duration">End:{ride.arrivalTime}</p>
+                        {/* <p className="duration">End:{ride.arrivalTime}</p> */}
                     </div>
                     <div className="ride-route">
                         <h3>{ride.startLocation} 📍</h3>
@@ -73,7 +83,12 @@ export const RideDetails = () => {
                         <p>{ride.seatsAvailable} Seats Available</p>
                         <h2>₹{ride.pricePerSeat}.00</h2>
                     </div>
-                    <Link to="/confirmationpage"><button className="book-button">⚡ Book</button></Link>
+                    {/* <div className="ride-details">
+                        <button onClick={() => setShowChat(true)}>Chat with Driver</button>
+
+                        {showChat && <ChatBoxPage rideId={rideId} userId={userId} />}
+                    </div> */}
+                    <button className="book-button" onClick={handleBookClick}>⚡ Book</button>
                 </div>
             </div>
             <Footer />
