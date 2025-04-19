@@ -181,7 +181,7 @@ export const DriverRides = () => {
                                         )}
                                     </div>
                                     <div className="ride-request">
-                                        <h4>Ride Request</h4>
+                                        <h4>Ride Requests</h4>
                                         <div className="buton-ride-request">
                                             <button onClick={() => handleToggleRequest(ride._id)}>
                                                 {showRequests[ride._id] ? 'Hide Requests' : 'Show Requests'}
@@ -196,7 +196,9 @@ export const DriverRides = () => {
                                                             <p><strong>Rider Name:</strong> {req.riderId?.userName}</p>
                                                             <p><strong>Pickup:</strong> {req.pickupLocation}</p>
                                                             <p><strong>Dropoff:</strong> {req.dropoffLocation}</p>
-                                                            <p><strong>Status:</strong> {req.ridestatus}</p>
+                                                            <div className="status-tag">
+                                                                <p><strong>Status:</strong> {req.ridestatus}</p>
+                                                            </div>
                                                             {req.ridestatus === "pending" && (
                                                                 <div className="request-actions">
                                                                     <button
@@ -213,19 +215,22 @@ export const DriverRides = () => {
                                                                     </button>
                                                                 </div>
                                                             )}
-                                                            {req.ridestatus === "accepted" && (
-                                                                <div className="request-actions">
-                                                                    <button
-                                                                        onClick={() => {
-                                                                            navigate(`/chatbox/${req.riderId._id}`, { replace: true });
-                                                                            setSelectedChat({ rideId: ride._id, riderId: req.riderId });
-                                                                        }}
-                                                                        className="message-btn"
-                                                                    >
-                                                                        Message
-                                                                    </button>
-                                                                </div>
-                                                            )}
+                                                            <button
+                                                                onClick={() => {
+                                                                    console.log("Ride ID:", ride._id);
+                                                                    console.log("Sender (Driver) ID:", driverId);
+                                                                    console.log("Receiver (Rider) ID:", req.riderId._id);
+
+                                                                    setSelectedChat({
+                                                                        rideId: ride._id,
+                                                                        receiverId: req.riderId._id,
+                                                                        receiverName: req.riderId.userName
+                                                                    });
+                                                                }}
+                                                                className="message-btn"
+                                                            >
+                                                                Message
+                                                            </button>
                                                         </div>
                                                     ))
                                                 ) : (
@@ -242,7 +247,9 @@ export const DriverRides = () => {
 
                     <div className="ride-chatbox">
                         {selectedChat ? (
-                            <ChatBoxPage rideId={selectedChat.rideId} rider={selectedChat.riderId._id} />
+                            <ChatBoxPage rideId={selectedChat.rideId}
+                                receiverId={selectedChat.receiverId}
+                                receiverName={selectedChat.receiverName} />
                         ) : (
                             <p className="chat-instruction">Select a ride to open the chat box</p>
                         )}

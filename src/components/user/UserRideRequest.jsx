@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import "../../assets/userriderequest.css"
 import axios from 'axios';
 import { Navbar } from "../layouts/Navbar";
+import { ChatBoxPage } from "../common/ChatBoxPage"
 
 export const UserRideRequest = () => {
     const [rideRequests, setRideRequests] = useState({});
+    const [selectedChatInfo, setSelectedChatInfo] = useState(null);
     const [showChatId, setShowChatId] = useState(null);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +34,7 @@ export const UserRideRequest = () => {
                             const rideRes = await axios.get(`/liveride/getridebyid/${request.rideId._id}`);
                             const rideDetails = rideRes.data.data;
                             // console.log("ride:-",rideDetails);
-                            
+
                             requestsMap[request._id] = { ...request, rideDetails };
                         } catch (err) {
                             console.error("Error fetching ride details", err);
@@ -77,9 +79,10 @@ export const UserRideRequest = () => {
         <>
             <Navbar />
             <div className="userRideRequests-container">
-                {Object.values(rideRequests).map((request) => (
-                    <div key={request._id} className="userRide-Card">
-                        <div className="userRide-info" style={{ width: '35%' }}>
+                {/* Left Side – Ride Requests List */}
+                <div className="userRideRequest-list">
+                    {Object.values(rideRequests).map((request) => (
+                        <div key={request._id} className="userRideRequest-card">
                             <div className="userRide-driver-info">
                                 <h3>Driver: {request.rideDetails?.driverId?.userName || "N/A"}</h3>
                                 <p>Vehicle: {request.rideDetails?.vehicleId?.vehicleModel || "N/A"}</p>
@@ -92,49 +95,73 @@ export const UserRideRequest = () => {
                             </div>
 
                             <div className="userRide-status">
-                                <h4>Request Status: <span className={`status-${request.ridestatus}`}>{request.ridestatus}</span></h4>
-                                <h4>Ride Status: <span className={`status-${request.rideDetails?.status || 'not-started'}`}>{request.rideDetails?.status || 'Not Started'}</span></h4>
+                                <h4>
+                                    Request Status:{" "}
+                                    <span className={`status-${request.ridestatus}`}>
+                                        {request.ridestatus}
+                                    </span>
+                                </h4>
+                                <h4>
+                                    Ride Status:{" "}
+                                    <span className={`status-${request.rideDetails?.status || "not-started"}`}>
+                                        {request.rideDetails?.status || "Not Started"}
+                                    </span>
+                                </h4>
 
                                 <div className="userRide-status-buttons">
-                                    {request.ridestatus !== "cancelled" && request.rideDetails?.status !== "cancelled" && (
-                                        <>
-                                            {request.rideDetails?.status === "in-progress" && (
-                                                <button onClick={() => alert("Marking as completed...")}>
-                                                    Mark as Completed
+                                    {request.ridestatus !== "cancelled" &&
+                                        request.rideDetails?.status !== "cancelled" && (
+                                            <>
+                                                {request.rideDetails?.status === "in-progress" && (
+                                                    <button onClick={() => alert("Marking as completed...")}>
+                                                        Mark as Completed
+                                                    </button>
+                                                )}
+                                                <button onClick={() => handleCancelRide(request._id)}>
+                                                    Cancel Ride
                                                 </button>
-                                            )}
-                                            <button onClick={() => handleCancelRide(request._id)}>Cancel Ride</button>
-                                            {request.ridestatus === "accepted" && (
-                                                <button onClick={() => handleChat(request._id)}>Message</button>
-                                            )}
-                                        </>
-                                    )}
+                                                {request.ridestatus === "accepted" && (
+                                                    <button onClick={() => {
+                                                        const rideId = request.rideDetails?._id;
+                                                        const senderId = userId;
+                                                        const receiverId = request.rideDetails?.driverId?._id;
+                                                        const receiverName = request.rideDetails?.driverId?.userName
+
+                                                        console.log("Opening chat with:");
+                                                        console.log("Ride ID:", rideId);
+                                                        console.log("senderId ID:", senderId);
+                                                        console.log("receiverId ID:", receiverId);
+
+                                                        setSelectedChatInfo({ rideId, receiverId, receiverName });
+                                                    }}>
+                                                        Message
+                                                    </button>
+                                                )}
+                                            </>
+                                        )}
                                 </div>
                             </div>
                         </div>
+                    ))}
+                </div>
 
-                        <hr />
-
-                        {showChatId === null ? (
-                            <div className="userRide-chat-box">
-                                <p>Select a ride to open the chat box</p>   
-                            </div>
-                        ) : (
-                            showChatId === request._id && (
-                                <div className="userRide-chat-box" style={{ width: '65%' }}>
-                                    <div className="userRide-messages">
-                                        {/* Future chat messages */}
-                                    </div>
-                                    <div className="userRide-message-input">
-                                        <input type="text" placeholder="Type a message..." />
-                                        <button>Send</button>
-                                    </div>
-                                </div>
-                            )
-                        )}
+                {/* Right Side – Chat Section */}
+                <div className="userRideRequest-chat">
+                    <div className="userRideRequest-chat-card">
+                        <div className="userRide-messages">
+                            {selectedChatInfo ? (
+                                <ChatBoxPage
+                                    rideId={selectedChatInfo.rideId}
+                                    receiverId={selectedChatInfo.receiverId}
+                                    receiverName={selectedChatInfo.receiverName}
+                                />
+                            ) : (
+                                <p>Select a ride request to start chatting</p>
+                            )}
+                        </div>
                     </div>
-                ))}
-            </div>
+                </div>
+            </div >
         </>
     );
 

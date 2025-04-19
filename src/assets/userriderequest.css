@@ -1,106 +1,192 @@
+/* Main Container */
 .userRideRequests-container {
-    padding: 20px;
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    width: 100%;
+    height: calc(100vh - 70px);
+    /* Adjust for navbar height */
+    background-color: #f8f9fa;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.userRide-Card {
-    display: flex;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.userRide-info {
+/* Left Ride Request List */
+.userRideRequest-list {
     width: 35%;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 1px solid #ddd;
 }
 
-.userRide-driver-info h3,
-.userRide-ride-details p {
+/* Ride Card Styles */
+.userRideRequest-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.userRideRequest-card h3,
+.userRideRequest-card p,
+.userRideRequest-card h4 {
     margin: 5px 0;
+    font-size: 0.95rem;
 }
 
-.userRide-status h4 {
-    margin: 10px 0;
-}
-
-.status-pending {
-    color: orange;
+.userRide-status span {
+    font-weight: bold;
+    text-transform: capitalize;
 }
 
 .status-accepted {
-    color: green;
+    color: #00aaff;
 }
 
 .status-cancelled {
-    color: red;
+    color: #dc3545;
+}
+
+.status-in-progress {
+    color: #28a745;
 }
 
 .status-not-started {
-    color: grey;
+    color: #6c757d;
 }
 
 .userRide-status-buttons {
-    display: flex;
-    gap: 10px;
     margin-top: 10px;
 }
 
 .userRide-status-buttons button {
-    padding: 8px 16px;
-    border: none;
-    background-color: #28a745;
+    background-color: #007bff;
     color: white;
+    border: none;
+    padding: 6px 12px;
+    margin-right: 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
     cursor: pointer;
-    border-radius: 4px;
 }
 
 .userRide-status-buttons button:hover {
-    background-color: #218838;
-}
-
-.userRide-chat-box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.userRide-messages {
-    background: #f1f1f1;
-    padding: 10px;
-    height: 200px;
-    overflow-y: auto;
-}
-
-.userRide-message-input {
-    display: flex;
-    gap: 10px;
-}
-
-.userRide-message-input input {
-    width: 80%;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
-.userRide-message-input button {
-    padding: 10px 20px;
-    border: none;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    border-radius: 4px;
-}
-
-.userRide-message-input button:hover {
     background-color: #0056b3;
 }
 
-.error {
-    color: red;
-    font-size: 16px;
+/* Right Section - Chat Box */
+.userRideRequest-chat {
+    width: 65%;
+    padding: 20px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Chat Card Wrapper */
+.userRideRequest-chat-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Message Container */
+.userRide-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Individual Messages */
+.message {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    color: white;
+    word-wrap: break-word;
+}
+
+.message.sent {
+    align-self: flex-end;
+    background-color: #00aaff;
+}
+
+.message.received {
+    align-self: flex-start;
+    background-color: #005f73;
+}
+
+/* Input Area */
+.userRide-message-input {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.userRide-message-input input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+    outline: none;
+}
+
+.userRide-message-input button {
+    padding: 10px 15px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userRide-message-input button:hover {
+    background-color: #0077aa;
+}
+
+/* Empty Message Fallback */
+.userRideRequest-chat-card p {
     text-align: center;
+    font-size: 1rem;
+    color: #999;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .userRideRequests-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .userRideRequest-list,
+    .userRideRequest-chat {
+        width: 100%;
+        height: auto;
+        padding: 15px;
+    }
+
+    .userRideRequest-chat-card {
+        height: auto;
+    }
+
+    .userRide-messages {
+        max-height: 50vh;
+    }
 }

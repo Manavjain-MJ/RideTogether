@@ -36,7 +36,7 @@ function App() {
 
   return (
     <>
-    <ToastContainer position="top-right" autoClose={2500}/>
+      <ToastContainer position="top-right" autoClose={2500} />
       <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY} libraries={["places"]}>
         <AuthProvider>
           <Routes>
@@ -52,16 +52,15 @@ function App() {
               <Route path='/ridelisting' element={<RideListing />} />
               <Route path='/ridedetails/:id' element={<RideDetails />} />
               <Route path='/riderequest/:id' element={<RideRequestPage />} />
-              {/* <Route path="/chatbox/:rideId" element={<ChatBoxPage />} /> */}
+              <Route path='/driverrides' element={<DriverRides />}></Route>
+              <Route path='/riderrequestrides' element={<UserRideRequest />} />
+              <Route path='/chatbox/:id' element={<ChatBoxPage />}></Route>
               <Route path='/confirmationpage' element={<ConfirmationPage />} />
               <Route path='/userprofile' element={<UserProfile />} />
               <Route path='/usergovtid' element={<UserGovtProfile />} />
               <Route path='/usereditprofile' element={<UserEditProfile />}></Route>
             </Route>
-            <Route path='/chatbox/:id' element={<ChatBoxPage />}></Route>
-            <Route path='/driverrides' element={<DriverRides />}></Route>
-            <Route path='/riderrequestrides' element={<UserRideRequest />} />
-            <Route path="/paymentgateway" element={<RazorPayDemo/>}/>
+            <Route path="/paymentgateway" element={<RazorPayDemo />} />
 
           </Routes>
         </AuthProvider>
