@@ -54,9 +54,9 @@ export const UserRideRequest = () => {
         fetchUserRideRequests();
     }, [userId]);
 
-    const handleChat = (id) => {
-        setShowChatId(id === showChatId ? null : id);
-    };
+    // const handleChat = (id) => {
+    //     setShowChatId(id === showChatId ? null : id);
+    // };
 
     const handleCancelRide = async (rideRequestId) => {
         try {

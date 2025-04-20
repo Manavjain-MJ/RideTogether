@@ -1,6 +1,6 @@
 .chat-page {
     display: flex;
-    height:100vh ;
+    height: 100vh;
     /* Subtract navbar height */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     overflow: hidden;
@@ -32,24 +32,21 @@
     background-color: #ffffff;
     box-sizing: border-box;
     position: relative;
-    /* Remove the fixed position */
     top: 0;
     right: 0;
-    /* height: 100vh;  */
-    /* Make sure it occupies the full height */
-    overflow-y: auto;
+    height: 100%;
+    /* Full height to allow scroll inside */
+    overflow: hidden;
     z-index: 999;
-    /* Ensure it's always on top */
     transition: transform 0.3s ease-in-out;
-    /* Smooth transition */
 }
 
 .messages {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     overflow-y: auto;
-    height: 60%;
     padding: 1rem;
 }
 
@@ -75,6 +72,8 @@
     display: flex;
     padding-top: 1rem;
     border-top: 1px solid #ddd;
+    background-color: white;
+    /* Ensure it doesn't blend with messages */
 }
 
 .input-area input {
