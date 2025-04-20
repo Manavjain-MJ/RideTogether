@@ -33,7 +33,7 @@ export const UserRideRequest = () => {
                         try {
                             const rideRes = await axios.get(`/liveride/getridebyid/${request.rideId._id}`);
                             const rideDetails = rideRes.data.data;
-                            // console.log("ride:-",rideDetails);
+                            // console.log("ride:-",request.rideId._id);
 
                             requestsMap[request._id] = { ...request, rideDetails };
                         } catch (err) {
@@ -73,6 +73,64 @@ export const UserRideRequest = () => {
         }
     };
 
+    const handlePayment = async (request) => {
+        try {
+            const res = await axios.post('/payments/create_order', {
+                amount: request.rideDetails.pricePerSeat,
+                currency: 'INR',
+                receipt: `receipt_${request._id}`,
+            });
+            const options = {
+                key: 'rzp_test_xLITjHmCvR82HS', // replace with your live key in production
+                amount: res.data.amount,
+                currency: res.data.currency,
+                name: 'RideTogether',
+                description: 'Ride Payment',
+                order_id: res.data.id,
+                handler: async (response) => {
+                    const verification = await axios.post('/payments/verify_order', {
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_signature: response.razorpay_signature,
+                    });
+
+                    if (verification.data.status === 'success') {
+                        alert('Payment Successful');
+
+
+                        await axios.put(`/riderequest/updatepaymentstatus/${request._id}`, {
+                            status: 'paid',
+                        });
+
+                        setRideRequests((prev) => ({
+                            ...prev,
+                            [request._id]: {
+                                ...prev[request._id],
+                                paymentStatus: 'paid',
+                            },
+                        }));
+                    } else {
+                        alert('Payment Verification Failed');
+                    }
+                },
+                prefill: {
+                    name: user.name || 'Customer',
+                    email: user.email || 'customer@example.com',
+                    contact: user.phone || '9876543210',
+                },
+                theme: {
+                    color: '#F37254',
+                },
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.open();
+        } catch (err) {
+            console.error('Payment error:', err);
+            alert('Failed to initiate payment');
+        }
+    };
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div className="error">{error}</div>;
     return (
@@ -91,7 +149,16 @@ export const UserRideRequest = () => {
                             <div className="userRide-ride-details">
                                 <p>Pickup: {request.pickupLocation}</p>
                                 <p>Dropoff: {request.dropoffLocation}</p>
-                                <p>Price: ₹{request.rideDetails?.pricePerSeat || "N/A"}</p>
+                                <p>
+                                    Price:{" "}
+                                    {request.rideDetails?.pricePerSeat
+                                        ? new Intl.NumberFormat('en-IN', {
+                                            style: 'currency',
+                                            currency: 'INR',
+                                            minimumFractionDigits: 2,
+                                        }).format(request.rideDetails.pricePerSeat)
+                                        : "N/A"}
+                                </p>
                             </div>
 
                             <div className="userRide-status">
@@ -107,6 +174,12 @@ export const UserRideRequest = () => {
                                         {request.rideDetails?.status || "Not Started"}
                                     </span>
                                 </h4>
+                                <h4>
+                                    Payment Status:{" "}
+                                    <span className={`status-${request.rideDetails?.paymentStatus || "pending"}`}>
+                                        {request.rideDetails?.paymentStatus || "pending"}
+                                    </span>
+                                </h4>
 
                                 <div className="userRide-status-buttons">
                                     {request.ridestatus !== "cancelled" &&
@@ -117,9 +190,23 @@ export const UserRideRequest = () => {
                                                         Mark as Completed
                                                     </button>
                                                 )}
-                                                <button onClick={() => handleCancelRide(request._id)}>
-                                                    Cancel Ride
-                                                </button>
+                                                {
+                                                    request.ridestatus !== "accepted" && (
+                                                        <button onClick={() => handleCancelRide(request._id)}>
+                                                            Cancel Ride
+                                                        </button>
+                                                    )}
+                                                {request.rideDetails?.status === "completed" &&
+                                                    request.rideDetails?.paymentStatus !== "paid" && (
+                                                        <button onClick={() => handlePayment(request)}>
+                                                            Pay Now
+                                                        </button>
+                                                    )}
+
+                                                {request.rideDetails?.status === "completed" &&
+                                                    request.paymentStatus === "paid" && (
+                                                        <span className="paid-label">Paid</span>
+                                                    )}
                                                 {request.ridestatus === "accepted" && (
                                                     <button onClick={() => {
                                                         const rideId = request.rideDetails?._id;

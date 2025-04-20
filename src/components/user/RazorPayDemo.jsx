@@ -16,7 +16,7 @@ export const RazorPayDemo = () => {
             });
 
             const options = {
-                key: 'rzp_test_xLITjHmCvR82HS', // Razorpay API Key
+                key: 'rzp_test_xLITjHmCvR82HS', 
                 amount: data.amount, // Amount in paise
                 currency: data.currency,
                 name: 'RideTogether',

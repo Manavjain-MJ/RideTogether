@@ -66,14 +66,28 @@ export const DriverRides = () => {
     //     }
     // };
 
-    const handleStatusUpdate = async (rideId, newStatus) => {
-        // console.log(rideId, newStatus)
+    const handleStatusUpdate = async (rideId, newStatus, paymentStatus) => {
+        // console.log("hello",rideId, newStatus)
         try {
-            await axios.put("/liveride/updatestatus", {
+            await axios.put(`/liveride/updatestatus`, {
                 id: rideId,
                 status: newStatus,
+                paymentStatus: paymentStatus,
             });
-            // Refresh the ride list
+            
+            const requests = await axios.get(`/riderequest/getriderequestid/${rideId}`);
+            const allRequests = requests.data.data;
+            console.log("hel",allRequests);
+            
+
+            // Check if all riders have paid
+            const allPaid = allRequests.every(req => req.paymentStatus === "paid");
+
+            // If all riders have paid and the ride is completed, delete the ride
+            if (newStatus === "completed" && allPaid) {
+                await handleDeleteRide(rideId);
+            }
+
             const updated = await axios.get(`/liveride/driverrides/${driverId}`);
             setRides(updated.data.data);
             // console.log("Rides response data:", updated.data.data)
@@ -106,13 +120,13 @@ export const DriverRides = () => {
 
     const handleRequestDecision = async (requestId, decision, rideId) => {
         try {
+            console.log("Request ID:", requestId);
             await axios.put(`/riderequest/updatedstatus/${requestId}`, {
                 ridestatus: decision, // "accepted" or "rejected"
             });
-
-
             // Refresh requests for this ride
             const res = await axios.get(`/riderequest/getriderequestid/${rideId}`);
+            console.log("📦 GET response data:", res.data);
             setRideRequests((prev) => ({
                 ...prev,
                 [rideId]: res.data.data,
@@ -153,16 +167,13 @@ export const DriverRides = () => {
                                         <div className="status-tag">
                                             Status: <strong>{ride.status}</strong>
                                         </div>
+                                        <p><strong>Paid:</strong> {ride.paymentStatus}</p>
                                     </div>
                                     <hr className="ride-divider" />
                                     <div className="driver-info">
-                                        <img
-                                            src={ride.driverId?.avatar}
-                                            alt={ride.driverId?.userName}
-                                            className="driver-avatar"
-                                        />
+                                        <i className="fas fa-user avatar-placeholder"></i>
                                         <div className="driver-rating">
-                                            <span>{ride.driverId?.userName}</span>
+                                            <span style={{ fontWeight: "500" }}>{ride.driverId?.userName}</span>
                                         </div>
                                     </div>
 
@@ -217,7 +228,7 @@ export const DriverRides = () => {
                                                             )}
                                                             <button
                                                                 onClick={() => {
-                                                                    console.log("Ride ID:", ride._id);
+                                                                    console.log("Ride ID:", ride.paymentStatus);
                                                                     console.log("Sender (Driver) ID:", driverId);
                                                                     console.log("Receiver (Rider) ID:", req.riderId._id);
 
@@ -231,6 +242,14 @@ export const DriverRides = () => {
                                                             >
                                                                 Message
                                                             </button>
+                                                            {ride.status === "completed" && ride.paymentStatus !== "paid" && (
+                                                                <button
+                                                                    onClick={() => handleStatusUpdate(ride._id, "completed", "paid")}
+                                                                    className="paid-btn"
+                                                                >
+                                                                    Mark as Paid
+                                                                </button>
+                                                            )}
                                                         </div>
                                                     ))
                                                 ) : (
