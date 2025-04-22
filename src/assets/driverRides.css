@@ -38,10 +38,38 @@
     transform: scale(1.05);
 } */
 
-.ride-info {
+.driver-ride-info {
     display: flex;
-    margin-bottom: 10px;
+    flex-direction: column;
+    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 12px;
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); */
+    margin-bottom: 16px;
+    font-family: "Segoe UI", sans-serif;
+    gap: 8px;
 }
+
+.driver-ride-info h4.route {
+    margin: 0;
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.ride-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+    color: #444;
+}
+
+.ride-meta>div {
+    background: #eef1f5;
+    padding: 6px 12px;
+    border-radius: 8px;
+}
+
 
 .time,
 .price {
@@ -133,9 +161,9 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+/* button:hover {
     background-color: #0056b3;
-}
+} */
 
 .accept-btn {
     background-color: #28a745;

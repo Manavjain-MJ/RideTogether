@@ -197,7 +197,7 @@ export const UserProfile = () => {
                                     onChange={handleImageUpload}
                                 />
                             </div>
-                            <div className="section-item"><Link to="/usereditprofile" className='edit-details'>Edit personal details</Link></div>
+                            {/* <div className="section-item"><Link to="/usereditprofile" className='edit-details'>Edit personal details</Link></div> */}
                         </div>
 
                         <hr className='partition' />
@@ -210,17 +210,17 @@ export const UserProfile = () => {
                                     Verify your Govt. ID
                                 </div>
                             </Link>
-                            <div className="section-item">
+                            {/* <div className="section-item">
                                 <FaPlus />
                                 Confirm email {userProfile?.userId?.email || "youremail@example.com"}
-                            </div>
+                            </div> */}
                         </div>
 
                         <hr className="divider" />
 
                         <div className="section">
                             <h3>About you</h3>
-                            {!userProfile?.miniBio && !showBioInput && (
+                            {/* {!userProfile?.miniBio && !showBioInput && (
                                 <div className="section-item" onClick={() => setShowBioInput(true)} style={{ cursor: "pointer" }}>
                                     <FaPlus />
                                     <span style={{ marginLeft: "8px" }}>Add a mini bio</span>
@@ -264,7 +264,7 @@ export const UserProfile = () => {
                                         </button>
                                     </div>
                                 </div>
-                            )}
+                            )} */}
                             <Link to="/riderrequestrides" style={{ textDecoration: "none" }}>
                                 <div className="section-item">
                                     <FaPlus />

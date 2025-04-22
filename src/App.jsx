@@ -29,6 +29,7 @@ import { UserRideRequest } from './components/user/UserRideRequest'
 import { LoadScript } from "@react-google-maps/api";
 import { RazorPayDemo } from './components/user/RazorPayDemo'
 import { ToastContainer } from 'react-toastify'
+import { TermsAndConditions } from './components/common/TermsAndConditions'
 // import './App.css'
 
 function App() {
@@ -60,8 +61,8 @@ function App() {
               <Route path='/usergovtid' element={<UserGovtProfile />} />
               <Route path='/usereditprofile' element={<UserEditProfile />}></Route>
             </Route>
-            <Route path="/paymentgateway" element={<RazorPayDemo />} />
-
+            {/* <Route path="/paymentgateway" element={<RazorPayDemo />} /> */}
+              <Route path='/termsandconditions' element={<TermsAndConditions/>}/>
           </Routes>
         </AuthProvider>
         {/* <Navbar/> */}

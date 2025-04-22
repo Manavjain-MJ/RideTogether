@@ -169,7 +169,7 @@ export const VehicleDetails = () => {
                         placeholder="e.g., Black"
                     />
                     {errors.vehicleColor && <p className="error">{errors.vehicleColor.message}</p>}
-
+{/* 
                     <label>Vehicle Type:</label>
                     <select {...register("vehicleType", { required: "Vehicle type is required" })}>
                         <option value="">Vehicle Type</option>
@@ -188,7 +188,7 @@ export const VehicleDetails = () => {
                         <option value="hybrid">Hybrid</option>
                     </select>
 
-                    {/* Additional Features */}
+                    {/* Additional Features *
                     <div className="checkbox-group">
                         <label>
                             <input type="checkbox" {...register("airConditioning")} />
@@ -208,7 +208,8 @@ export const VehicleDetails = () => {
                         <option value="large">Large</option>
                     </select>
 
-                    {/* Vehicle Image Upload */}
+                    */}
+                     {/* Vehicle Image Upload * */}
                     <label>Upload Vehicle Images (Max 5):</label>
                     <div className="custom-file-upload">
                         <input
@@ -221,14 +222,14 @@ export const VehicleDetails = () => {
                     </div>
                     {errors.vehicleImages && <p className="error">{errors.vehicleImages.message}</p>}
 
-                    {/* Image Preview Section */}
+                     {/* Image Preview Section * */}
                     {imagePreview.length > 0 && (
                         <div className="image-preview-container">
                             {imagePreview.map((img, index) => (
                                 <img key={index} src={img} alt={`Preview ${index + 1}`} className="image-preview" />
                             ))}
                         </div>
-                    )}
+                    )} 
 
                     {/* Submit Button */}
                     <button type="submit">Save Vehicle</button>

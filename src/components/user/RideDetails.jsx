@@ -4,7 +4,8 @@ import "../../assets/ridedetails.css"
 import axios from 'axios';
 import { Navbar } from '../layouts/Navbar';
 import { Footer } from '../layouts/Footer';
-import { ChatBoxPage } from '../common/ChatBoxPage';
+// import { ChatBoxPage } from '../common/ChatBoxPage';
+import MapPopupModal from '../common/MapPopupModal'
 
 export const RideDetails = ({ rideId, userId }) => {
     const { id } = useParams();
@@ -13,6 +14,8 @@ export const RideDetails = ({ rideId, userId }) => {
     const [error, setError] = useState(null);
     const [user, setUser] = useState(null);
     const [showChat, setShowChat] = useState(false);
+    const [showMap, setShowMap] = useState(false);
+    const [focusPoint, setFocusPoint] = useState("start");
     const navigate = useNavigate();
     const currentDate = new Date().toDateString();
 
@@ -36,6 +39,11 @@ export const RideDetails = ({ rideId, userId }) => {
         navigate(`/riderequest/${id}`); // assuming ride._id is the ID of the current ride
     };
 
+    const handleLocationClick = (point) => {
+        setFocusPoint(point);
+        setShowMap(true);
+    };
+
     // if (loading) return <p>Loading ride details...</p>;
     if (error) return <p>{error}</p>;
     if (!ride) return <p>No ride data available.</p>;
@@ -50,22 +58,22 @@ export const RideDetails = ({ rideId, userId }) => {
                 <div className="ride-info-box">
                     <div className="ride-time">
                         <p className="time">
-                            Start: {ride.departureTime ? new Date(ride.departureTime).toLocaleTimeString() : "N/A"}
+                            Start: {ride.departureTime ? new Date(ride.departureTime).toLocaleTimeString('en-GB') : "N/A"}
                         </p>
                         {/* <p className="duration">End:{ride.arrivalTime}</p> */}
                     </div>
                     <div className="ride-route">
-                        <h3>{ride.startLocation} 📍</h3>
-                        <h3>{ride.destination} 📍</h3>
+                        <h3 onClick={() => handleLocationClick("start")} style={{ cursor: "pointer", color: "#005f73" }}>{ride.startLocation} 📍</h3>
+                        <h3 onClick={() => handleLocationClick("end")} style={{ cursor: "pointer", color: "#005f73" }}>{ride.destination} 📍</h3>
                     </div>
                 </div>
 
                 {/* Driver Info */}
                 <div className="driver-info-box">
-                    <img src={ride.driverId?.avatar} alt={ride.driverId?.userName} className="driver-avatar" />
+                    <i className="fas fa-user driver-details-avatar"></i>
                     <div className="driver-details">
                         <h3>{ride.driverId?.userName}</h3>
-                        <p>Your booking will be confirmed instantly</p>
+                        <p>Your booking will be confirmed Shortly</p>
                         <p>🚗 {ride.vehicleId?.vehicleBrand}-{ride.vehicleId?.vehicleModel}</p>
                         <p>📧 {ride.driverId?.email || "N/A"}</p>
                         <p>📞 {ride.driverId?.mobileNumber || "N/A"}</p>
@@ -77,7 +85,13 @@ export const RideDetails = ({ rideId, userId }) => {
                     <h3>{currentDate}</h3>
                     <div className="ride-summary">
                         <h4>{ride.startLocation} → {ride.destination}</h4>
-                        <p>Time: {new Date(ride.departureTime).toLocaleTimeString()} - {ride.arrivalTime}</p>
+                        <p>Time:  {ride.departureTime ? (() => {
+                            const date = new Date(ride.departureTime);
+                            const day = String(date.getDate()).padStart(2, '0');
+                            const month = String(date.getMonth() + 1).padStart(2, '0');
+                            const year = date.getFullYear();
+                            return `${day}-${month}-${year}`;
+                        })() : "N/A"} - {ride.arrivalTime}</p>
                     </div>
                     <div className="price-section">
                         <p>{ride.seatsAvailable} Seats Available</p>
@@ -92,6 +106,14 @@ export const RideDetails = ({ rideId, userId }) => {
                 </div>
             </div>
             <Footer />
+            {showMap && (
+                <MapPopupModal
+                    origin={ride.startLocation}
+                    destination={ride.destination}
+                    focus={focusPoint}
+                    onClose={() => setShowMap(false)}
+                />
+            )}
         </>
     )
 }

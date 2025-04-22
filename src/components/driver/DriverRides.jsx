@@ -74,11 +74,11 @@ export const DriverRides = () => {
                 status: newStatus,
                 paymentStatus: paymentStatus,
             });
-            
+
             const requests = await axios.get(`/riderequest/getriderequestid/${rideId}`);
             const allRequests = requests.data.data;
-            console.log("hel",allRequests);
-            
+            console.log("hel", allRequests);
+
 
             // Check if all riders have paid
             const allPaid = allRequests.every(req => req.paymentStatus === "paid");
@@ -156,18 +156,20 @@ export const DriverRides = () => {
                         ) : (
                             rides.map((ride) => (
                                 <div key={ride._id} className="ride-card">
-                                    <div className="ride-info">
+                                    <div className="driver-ride-info">
                                         {/* <span className="time">
                                             {ride.departureTime} - {ride.duration} - {ride.arrivalTime}
                                         </span> */}
-                                        <h4>
+                                        <h4 className="route-drive">
                                             {ride.startLocation} → {ride.destination}
                                         </h4>
-                                        <div className="price">Price:₹{ride.pricePerSeat}.00</div>
-                                        <div className="status-tag">
-                                            Status: <strong>{ride.status}</strong>
+                                        <div className="ride-meta">
+                                            <div className="price">Price:₹{ride.pricePerSeat}.00</div>
+                                            <div className="status-tag">
+                                                Status: <strong>{ride.status}</strong>
+                                            </div>
+                                            <div className="payment"> Paid: <strong>{ride.paymentStatus}</strong></div>
                                         </div>
-                                        <p><strong>Paid:</strong> {ride.paymentStatus}</p>
                                     </div>
                                     <hr className="ride-divider" />
                                     <div className="driver-info">

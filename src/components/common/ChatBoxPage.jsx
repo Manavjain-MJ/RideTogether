@@ -62,24 +62,19 @@ export const ChatBoxPage = ({ receiverId, receiverName, rideId }) => {
 
 
     useEffect(() => {
+        if (!chatSocket) return;
         const handleIncomingMessage = (msg) => {
-            if (
-                msg.receiverId === selectedChat.otherUserId ||
-                msg.senderId === selectedChat.otherUserId
-            ) {
+            if (msg.rideId === rideId && (msg.receiverId === senderId || msg.senderId === senderId)) {
                 setMessages((prev) => [...prev, msg]);
             }
         };
 
-        // if (!chatSocket) return;
-        if (chatSocket) {
             chatSocket.on("newMessage", handleIncomingMessage);
-        }
 
         return () => {
             chatSocket?.off("newMessage", handleIncomingMessage);
         };
-    }, [selectedChat, chatSocket]);
+    }, [chatSocket,rideId, senderId]);
     // console.log("selectedchat", selectedChat)
 
     // Auto-scroll to the latest message
@@ -116,7 +111,8 @@ export const ChatBoxPage = ({ receiverId, receiverName, rideId }) => {
             {/* Chat box for selected chat */}
             {selectedChat && (
                 <div className="chat-box">
-                    <h4>Chat with {selectedChat?.receiverId?.userName || "Rider"}</h4>
+                    <h4>Chat </h4>
+                    <hr />
                     <div className="messages">
                         {messages.map((msg, idx) => (
                             <div

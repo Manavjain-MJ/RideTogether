@@ -105,7 +105,7 @@ export const RidePosting = () => {
                     />
                     {errors.pricePerSeat && <p className="error">{errors.pricePerSeat.message}</p>}
 
-                    <label>Ride Type:</label>
+                    {/* <label>Ride Type:</label>
                     <select {...register("rideType")}>
                         <option value="one-time">One-time</option>
                         <option value="recurring">Recurring</option>
@@ -114,7 +114,7 @@ export const RidePosting = () => {
                     <label>Ride Description (Optional):</label>
                     <textarea {...register("rideDescription")} placeholder="Add any additional details"></textarea>
 
-                    {/* Route Information */}
+                    {/* Route Information *
                     <label>Via Locations (Optional Stops):</label>
                     <input
                         type="text"
@@ -132,7 +132,7 @@ export const RidePosting = () => {
                         <option value="highway">Highway Preferred</option>
                     </select>
 
-                    {/* Privacy & Settings */}
+                    {/* Privacy & Settings *
                     <label>
                         <input
                             type="checkbox"
@@ -163,7 +163,7 @@ export const RidePosting = () => {
                         <option value="in-app">In-app Chat</option>
                         <option value="phone">Phone Call</option>
                         <option value="any">Any</option>
-                    </select>
+                    </select> */}
 
                     {/* Submit Button */}
                     <button type="submit"><Link to="/vehicledetails" />Post Ride</button>

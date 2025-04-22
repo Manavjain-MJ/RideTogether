@@ -160,6 +160,16 @@
 .userRide-message-input button:hover {
     background-color: #0077aa;
 }
+.userRideRequest-chat {
+    width: 65%;
+    padding: 20px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensures full viewport height */
+    box-sizing: border-box;
+}
+
 
 /* Empty Message Fallback */
 .userRideRequest-chat-card p {
@@ -167,6 +177,27 @@
     font-size: 1rem;
     color: #999;
 }
+.userRideRequest-chat-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Important to allow child scrolling */
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+.userRide-messages {
+    flex: 1;
+    min-height: 0; /* ✨ Required for proper flex scrolling */
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
 
 /* Responsive Layout */
 @media (max-width: 768px) {
@@ -187,6 +218,13 @@
     }
 
     .userRide-messages {
-        max-height: 50vh;
+        flex: 1;
+        min-height: 0; /* ✨ Required for proper flex scrolling */
+        overflow-y: auto;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border-bottom: 1px solid #ddd;
     }
 }

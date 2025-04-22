@@ -185,11 +185,6 @@ export const UserRideRequest = () => {
                                     {request.ridestatus !== "cancelled" &&
                                         request.rideDetails?.status !== "cancelled" && (
                                             <>
-                                                {request.rideDetails?.status === "in-progress" && (
-                                                    <button onClick={() => alert("Marking as completed...")}>
-                                                        Mark as Completed
-                                                    </button>
-                                                )}
                                                 {
                                                     request.ridestatus !== "accepted" && (
                                                         <button onClick={() => handleCancelRide(request._id)}>

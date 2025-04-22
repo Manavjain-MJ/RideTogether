@@ -13,34 +13,27 @@ export const HeroPage = () => {
   ];
   const faqs = [
     {
-      question: "How do I book a carpool ride?",
+      question: "What is the main goal of Ride-Togater?",
       answer:
-        "You can book a carpool ride on our mobile app or website. Simply search for your destination, choose your travel date, and select a carpool that suits you best!",
-      more:
-        "Once you've selected a ride, confirm your booking and contact the driver if needed. Payments can be made securely within the app.",
+        "Ride-Togater is designed to connect drivers and passengers traveling in the same direction to make transportation more affordable, convenient, and sustainable. It helps reduce the number of vehicles on the road, lowering fuel costs and carbon emissions while promoting shared mobility.",
     },
     {
-      question: "How do I publish a carpool ride?",
+      question: "Who can use the Ride-Togater app?",
       answer:
-        "Offering a carpool ride is simple. Use our app or website to enter your departure and arrival locations, date, and available seats.",
-      more:
-        "You can set your own price, choose preferences for passengers, and confirm bookings instantly or manually.",
+        "Both drivers and passengers can use the app. Drivers can post available rides by setting their route and available seats, while passengers can search and book rides that match their schedule and destination. The platform is built for urban and intercity commuters alike.",
     },
     {
-      question: "What are the benefits of travelling by carpool?",
+      question: "How does Ride-Togater ensure safety?",
       answer:
-        "Carpooling is cost-effective, eco-friendly, and a great way to meet new people while reducing traffic congestion.",
-      more:
-        "You save money on fuel, contribute to a greener environment, and make your journey more enjoyable by sharing it with others.",
+        "Safety is a top priority on Ride-Togater. All users must create verified profiles, and both passengers and drivers can leave ratings and reviews. The app also includes real-time GPS tracking and secure in-app communication to enhance trust and transparency.",
     },
     {
-      question: "How do I cancel my carpool ride?",
+      question: "What are the benefits of using this app?",
       answer:
-        "If your plans change, you can cancel your ride from the 'My Rides' section in the app.",
-      more:
-        "We recommend canceling as early as possible to allow other users to book the seat. Refund policies may apply based on the timing of cancellation.",
+        "Using Ride-Togater helps reduce travel expenses, traffic congestion, and your environmental footprint. It also offers a more social and enjoyable commuting experience by allowing users to connect with others heading the same way, all while ensuring ease of use and reliability.",
     },
   ];
+
   const [expanded, setExpanded] = useState(null);
   const toggleExpand = (index) => {
     setExpanded(expanded === index ? null : index);
@@ -90,7 +83,7 @@ export const HeroPage = () => {
             <div className='block2'>
               <h2>Your Safety, Our Priority</h2>
               <p style={{ margin: "35px 0px" }}>At RideTogether, we are committed to making your ride-sharing experience safe and reliable. While we work hard to ensure security, we want you to stay informed about potential risks and how to avoid them. Follow our safety tips and ride with confidence!</p>
-              <button className='learn-more'>Learn More</button>
+              {/* <button className='learn-more'>Learn More</button> */}
             </div>
           </div>
         </section>
@@ -106,7 +99,8 @@ export const HeroPage = () => {
           </div>
         </section >
         <section>
-          <div className='freq-places'>
+          <hr />
+          {/* <div className='freq-places'>
             <div className="freq-container">
               <h2 className="heading">Where’s Your Next Ride?</h2>
               <div className="button-container">
@@ -118,7 +112,7 @@ export const HeroPage = () => {
               </div>
               <a href="#" className="link">See our most popular rides</a>
             </div>
-          </div>
+          </div> */}
         </section>
         <section>
           <div>
@@ -132,16 +126,16 @@ export const HeroPage = () => {
                       {faq.answer}
                       {expanded === index && <span className="faq-more"> {faq.more}</span>}
                     </p>
-                    <button className="read-more" onClick={() => toggleExpand(index)}>
+                    {/* <button className="read-more" onClick={() => toggleExpand(index)}>
                       {expanded === index ? "" : "Read more"}
-                    </button>
+                    </button> */}
                   </div>
                 ))}
               </div>
             </div>
           </div>
           <div className="read-button-container">
-            <button className="help-button">Read our Help Centre</button>
+            {/* <button className="help-button">Read our Help Centre</button> */}
           </div>
         </section>
         <section>

@@ -121,7 +121,7 @@ export const RideListing = () => {
       )}
       {searchPerformed && filteredRides.length === 0 && !isLoading && !error && (
         <p style={{ textAlign: "center" }}>No rides found.</p>
-      )}  
+      )}
 
       {from && to && date && !isLoading && rideLists.length > 0 ? (
         <div className="ride-container">
@@ -190,8 +190,15 @@ export const RideListing = () => {
                 return (
                   <div key={ride._id} className="ride-card" onClick={() => navigate(`/ridedetails/${ride._id}`)}>
                     <div className="ride-info">
-                      <span className="time">
-                        {ride.departureTime} - {ride.duration} - {ride.arrivalTime}
+                      <span className="time" style={{fontWeight:"600"}}>
+                        {/* {ride.departureTime ? new Date(ride.departureTime).toISOString().split("T")[0]:"N/A"}  */}
+                        {ride.departureTime ? (() => {
+                          const date = new Date(ride.departureTime);
+                          const day = String(date.getDate()).padStart(2, '0');
+                          const month = String(date.getMonth() + 1).padStart(2, '0');
+                          const year = date.getFullYear();
+                          return `${day}-${month}-${year}`;
+                        })() : "N/A"}
                       </span>
                       <h4>{ride.startLocation} → {ride.destination}</h4>
                       <div className="price">₹{ride.pricePerSeat}.00</div>
@@ -199,10 +206,10 @@ export const RideListing = () => {
                     {/* Divider Line */}
                     <hr className="ride-divider" />
                     <div className="driver-info">
-                      <img src={ride.driverId?.avatar} alt={ride.driverId?.userName} className="driver-avatar" />
+                      <i className="fas fa-user driver-avatar"></i>
                       <div className="driver-rating">
                         <span>{ride.driverId?.userName}</span>
-                        <span className="rating">⭐ {ride.driverId?.rating}</span>
+                        {/* <span className="rating">⭐ {ride.driverId?.rating}</span> */}
                       </div>
                     </div>
                   </div>
