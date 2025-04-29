@@ -5,6 +5,7 @@ import { Navbar } from '../layouts/Navbar';
 import { Footer } from '../layouts/Footer';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export const VehicleDetails = () => {
     const {
@@ -46,7 +47,7 @@ export const VehicleDetails = () => {
                 setVehicleId(vehicleId);
                 localStorage.setItem("vehicleId", vehicleId);
                 // console.log("Vehicle ID:", vehicleId);
-                alert("Your Vehicle Details Are Added Successfully")
+                toast.success("Your Vehicle Details Are Added Successfully")
 
                 setRideSubmitted(true);
                 isNavigating.current = true;

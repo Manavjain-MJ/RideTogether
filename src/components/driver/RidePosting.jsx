@@ -5,6 +5,7 @@ import { Navbar } from '../layouts/Navbar';
 import { Footer } from '../layouts/Footer';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 export const RidePosting = () => {
     const {
@@ -42,7 +43,7 @@ export const RidePosting = () => {
             const rideData = { ...data, vehicleId, driverId }
             const res = await axios.post("/liveride/addliveride", rideData)
             if (res.status === 201) {
-                alert("ride posted")
+                toast.success("Ride Posted Succesfully")
                 localStorage.removeItem("vehicleId");
                 // console.log("Ride Data:", res.data);
                 navigate("/ridelisting");

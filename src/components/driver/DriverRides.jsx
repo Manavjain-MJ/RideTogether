@@ -79,13 +79,11 @@ export const DriverRides = () => {
             const allRequests = requests.data.data;
             console.log("hel", allRequests);
 
-
-            // Check if all riders have paid
             const allPaid = allRequests.every(req => req.paymentStatus === "paid");
 
-            // If all riders have paid and the ride is completed, delete the ride
             if (newStatus === "completed" && allPaid) {
-                await handleDeleteRide(rideId);
+                console.log("All riders paid and ride completed. Deleting ride:", rideId);  
+                await deleteRideDirectly(rideId);
             }
 
             const updated = await axios.get(`/liveride/driverrides/${driverId}`);
@@ -95,6 +93,18 @@ export const DriverRides = () => {
             console.error("Failed to update ride status:", err);
         }
     };
+    const deleteRideDirectly = async (rideId) => {
+        try {
+            await axios.delete(`/liveride/deletedriverride/${rideId}`, { data: { driverId } });
+            alert("Ride Deleted Successfully");
+
+            const updated = await axios.get(`/liveride/driverrides/${driverId}`);
+            setRides(updated.data.data);
+        } catch (err) {
+            console.error("Failed to delete ride:", err);
+        }
+    };
+
 
     const handleCancelRide = async (rideId) => {
         const confirmDelete = window.confirm("Are you sure you want to cancel and delete this ride?");

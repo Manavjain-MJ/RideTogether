@@ -13,24 +13,24 @@ export const HeroPage = () => {
   ];
   const faqs = [
     {
-      question: "What is the main goal of Ride-Togater?",
+      question: "What is the main goal of Ride-together?",
       answer:
-        "Ride-Togater is designed to connect drivers and passengers traveling in the same direction to make transportation more affordable, convenient, and sustainable. It helps reduce the number of vehicles on the road, lowering fuel costs and carbon emissions while promoting shared mobility.",
+        "Ride-Together is designed to connect drivers and passengers traveling in the same direction to make transportation more affordable, convenient, and sustainable. It helps reduce the number of vehicles on the road, lowering fuel costs and carbon emissions while promoting shared mobility.",
     },
     {
-      question: "Who can use the Ride-Togater app?",
+      question: "Who can use the Ride-Together app?",
       answer:
         "Both drivers and passengers can use the app. Drivers can post available rides by setting their route and available seats, while passengers can search and book rides that match their schedule and destination. The platform is built for urban and intercity commuters alike.",
     },
     {
-      question: "How does Ride-Togater ensure safety?",
+      question: "How does Ride-Together ensure safety?",
       answer:
-        "Safety is a top priority on Ride-Togater. All users must create verified profiles, and both passengers and drivers can leave ratings and reviews. The app also includes real-time GPS tracking and secure in-app communication to enhance trust and transparency.",
+        "Safety is a top priority on Ride-Together. All users must create verified profiles, and both passengers and drivers can leave ratings and reviews. The app also includes real-time GPS tracking and secure in-app communication to enhance trust and transparency.",
     },
     {
       question: "What are the benefits of using this app?",
       answer:
-        "Using Ride-Togater helps reduce travel expenses, traffic congestion, and your environmental footprint. It also offers a more social and enjoyable commuting experience by allowing users to connect with others heading the same way, all while ensuring ease of use and reliability.",
+        "Using Ride-Together helps reduce travel expenses, traffic congestion, and your environmental footprint. It also offers a more social and enjoyable commuting experience by allowing users to connect with others heading the same way, all while ensuring ease of use and reliability.",
     },
   ];
 
@@ -82,7 +82,7 @@ export const HeroPage = () => {
             </div>
             <div className='block2'>
               <h2>Your Safety, Our Priority</h2>
-              <p style={{ margin: "35px 0px" }}>At RideTogether, we are committed to making your ride-sharing experience safe and reliable. While we work hard to ensure security, we want you to stay informed about potential risks and how to avoid them. Follow our safety tips and ride with confidence!</p>
+              <p style={{ margin: "35px 0px" }}>At RideTogether, we are committed to making your ride-sharing experience safe and reliable.We want you to stay informed about potential risks and how to avoid them.</p>
               {/* <button className='learn-more'>Learn More</button> */}
             </div>
           </div>

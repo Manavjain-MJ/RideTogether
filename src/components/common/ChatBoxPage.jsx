@@ -28,19 +28,21 @@ export const ChatBoxPage = ({ receiverId, receiverName, rideId }) => {
             });
         }
     }, [receiverId, senderId, receiverName, rideId]);
-    useEffect(() => {
-        console.log("SelectedChat is being set:", { receiverId, senderId, receiverName, rideId });
-    }, [receiverId, senderId, receiverName, rideId]);
+    // useEffect(() => {
+    //     console.log("SelectedChat is being set:", { receiverId, senderId, receiverName, rideId });
+    // }, [receiverId, senderId, receiverName, rideId]);
 
 
     useEffect(() => {
-        const newSocket = io('http://localhost:8000');
+        const newSocket = io('http://localhost:8000', {
+            query: { userId: senderId }
+        });
         setChatSocket(newSocket);
 
         return () => {
             newSocket.disconnect();
         };
-    }, []);
+    }, [senderId]);
 
     // Fetching chat history when a new chat is selected
     useEffect(() => {
@@ -69,18 +71,18 @@ export const ChatBoxPage = ({ receiverId, receiverName, rideId }) => {
             }
         };
 
-            chatSocket.on("newMessage", handleIncomingMessage);
+        chatSocket.on("newMessage", handleIncomingMessage);
 
         return () => {
             chatSocket?.off("newMessage", handleIncomingMessage);
         };
-    }, [chatSocket,rideId, senderId]);
+    }, [chatSocket, rideId, senderId]);
     // console.log("selectedchat", selectedChat)
 
-    // Auto-scroll to the latest message
-    // useEffect(() => {
-    //     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    // }, [messages]);
+    // Auto-scroll} to the latest message
+    useEffect(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
 
     // Sending a new message
     const sendMessage = async () => {
@@ -93,12 +95,15 @@ export const ChatBoxPage = ({ receiverId, receiverName, rideId }) => {
             message: newMessage,
         };
 
-        setMessages((prev) => [...prev, { ...msg, senderId: senderId }]);
+        // setMessages}((prev) => [...prev, { ...msg, senderId: senderId }]);
         try {
-            await axios.post(`/messages/sendmessage/${selectedChat.otherUserId}`, msg);
             if (chatSocket) {
-                chatSocket.emit("newMessage", { ...msg, receiverId: selectedChat.otherUserId });
+                chatSocket.emit("sendMessage", msg); 
             }
+            await axios.post(`/messages/sendmessage/${selectedChat.otherUserId}`, msg);
+            // if (chatSocket) {
+            //     chatSocket.emit("newMessage", { ...msg, receiverId: selectedChat.otherUserId });
+            // }
             // fetchMessages()
             setNewMessage('');
         } catch (err) {
